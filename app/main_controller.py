@@ -22,6 +22,7 @@ class VideoProcessingWorker(QThread):
     def run(self):
         data = []
         frame_id = 0
+        frame_id_global = 0
         start_time = datetime.strptime(self.init_time, "%m/%d/%Y %H:%M")
 
         total_frames = self.estimate_total_frames()
@@ -47,13 +48,14 @@ class VideoProcessingWorker(QThread):
                         minutes_since_start = frame_id * self.min_per_frame * self.frame_skip
                         time_obj = start_time + timedelta(minutes=minutes_since_start)
                         time_str = time_obj.strftime("%m-%d-%Y %H:%M")
-                        data.append([frame_id, time_str, plant_id, *angles])
-                        
+                        data.append([frame_id_global, time_str, plant_id, *angles])
+                    
+                    frame_id += 1
                     processed_frames += 1
                     percent_done = int((processed_frames / total_frames) * 100)
                     self.progress_changed.emit(percent_done)
 
-                frame_id += 1
+                frame_id_global += 1
                 current_frame += 1
 
             cap.release()

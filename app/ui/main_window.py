@@ -78,7 +78,8 @@ class MainWindow(QMainWindow):
             output_dir=params["output_dir"],
             frame_skip=params["frame_skip"],
             init_time=params["init_time"],
-            min_per_frame=params["min_per_frame"]
+            min_per_frame=params["min_per_frame"],
+            visualization=params["visualization"]
         )
 
         self.progress_dialog = QProgressDialog("Procesando...", "Cancelar", 0, 100, self)

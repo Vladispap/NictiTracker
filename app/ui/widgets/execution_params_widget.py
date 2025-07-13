@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
-    QSpinBox, QTimeEdit, QPushButton, QFileDialog, QLineEdit, QDateTimeEdit
+    QSpinBox, QTimeEdit, QPushButton, QFileDialog, QLineEdit, QDateTimeEdit, QCheckBox
 )
 from PySide6.QtCore import QTime, QDateTime, QDate
 import os
@@ -51,8 +51,12 @@ class ExecutionParamsWidget(QWidget):
         self.btn_seleccionar_carpeta = QPushButton("Seleccionar carpeta")
         self.btn_seleccionar_carpeta.clicked.connect(self.seleccionar_carpeta)
         export_layout.addWidget(self.btn_seleccionar_carpeta)
-
         layout.addLayout(export_layout)
+
+        # Checkbox de visualización
+        self.checkbox_visualizacion = QCheckBox("Visualización")
+        layout.addWidget(self.checkbox_visualizacion)
+
         self.setLayout(layout)
 
     def seleccionar_carpeta(self):
@@ -66,5 +70,6 @@ class ExecutionParamsWidget(QWidget):
             "min_per_frame": self.mpf_input.value(),
             "frame_skip": self.skip_input.value(),
             "init_time": self.time_input.dateTime().toString("M/d/yyyy HH:mm"),
-            "output_dir": self.export_folder
+            "output_dir": self.export_folder,
+            "visualization": self.checkbox_visualizacion.isChecked()
         }
